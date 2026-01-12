@@ -1,43 +1,50 @@
 {
-  "name": "vsc-base",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "name": "vsc-mcp-boilerplate-${localWorkspaceFolderBasename}-${devcontainerId}",
+  "image": "aazw/devcontainers-devbox-go:7",
   "features": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "true"
+    }
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "emeraldwalk.runonsave",
         "ms-azuretools.vscode-containers",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "tamasfe.even-better-toml",
+        "anthropic.claude-code",
+        "openai.chatgpt",
+        "golang.go"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash"
       }
     }
   },
+  // "workspaceMount": "source=${localWorkspaceFolder}/..,target=/workspaces,type=bind,consistency=cached",
+  // "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "mounts": [
     {
-      "source": "${localWorkspaceFolder}/.claude",
+      "source": "${localWorkspaceFolder}/.claude-home-cache",
       "target": "/home/vscode/.claude",
       "type": "bind"
     }
   ],
+  "containerUser": "root",
   "remoteUser": "vscode",
   "remoteEnv": {
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
-    "TZ": "Asia/Tokyo"
-  },
-  "containerEnv": {
-    // "LANG": "ja_JP.UTF-8",
-    // "LC_MESSAGES": "C"
+    "TZ": "Asia/Tokyo",
+    "TASK_X_ENV_PRECEDENCE": "1"
   },
   "runArgs": [
     "--name",
-    "vsc-base",
+    "vsc-mcp-boilerplate-${localWorkspaceFolderBasename}-${devcontainerId}",
     "--add-host",
     "host.docker.internal:host-gateway"
-  ]
+  ],
+  "postAttachCommand": "task init"
 }
