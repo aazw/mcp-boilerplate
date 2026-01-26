@@ -1,6 +1,6 @@
 {
   "name": "vsc-mcp-boilerplate-${localWorkspaceFolderBasename}-${devcontainerId}",
-  "image": "aazw/devcontainers-devbox-go:7",
+  "image": "aazw/devcontainers-devbox-go:9",
   "features": {
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
       "version": "latest",
